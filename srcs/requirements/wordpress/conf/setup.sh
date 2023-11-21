@@ -23,7 +23,11 @@ wp config set WP_CACHE_KEY_SALT 'dsium.42.fr' --allow-root
 wp plugin install redis-cache --activate --allow-root
 wp redis enable --allow-root
 
-wp theme install twentynineteen --activate --allow-root
+# wp theme install twentynineteen --activate --allow-root
+chown -R www-data:www-data /var/www/wp-content
+chmod -R 755 /var/www/wp-content
+mkdir -p /var/www/wp-content/upgrade/
+wp theme install inspiro --activate --allow-root
 
 wp plugin update --all --allow-root
 
