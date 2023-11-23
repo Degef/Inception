@@ -2,28 +2,33 @@
 
 wp --allow-root --path=/var/www core install \
   --url="$DOMAIN_NAME" \
-  --title="Chinedu's Word-Press" \
+  --title="Degef's WordPress" \
   --admin_user="$WPADUSER" \
   --admin_password="$WPADPASS" \
-  --admin_email="cegbulef@student.42abudhabi.ae"
+  --admin_email="dsium@student.42abudhabi.ae"
 
-wp user create "$WPUSER1" "user1@student.42abudhabi.ae" \
+wp user create "$WPUSER1" "Natan@student.42abudhabi.ae" \
   --role=author \
   --user_pass="$WPUSER1PASS" \
   --allow-root
 
-wp --allow-root --path=/var/www option update blogname "Chinedu's Word-Press"
-wp --allow-root --path=/var/www option update blogdescription "The Inception of Things"
+wp --allow-root --path=/var/www option update blogname "Amazing Things!"
+wp --allow-root --path=/var/www option update blogdescription "Degef's Inception Project"
 wp --allow-root --path=/var/www option update blog_public 0
 
-# REDIS CACHE
+REDIS CACHE
 wp config set WP_CACHE true --allow-root
-wp config set WP_CACHE_KEY_SALT 'cegbulef.42.fr' --allow-root
+wp config set WP_CACHE_KEY_SALT 'dsium.42.fr' --allow-root
 
 wp plugin install redis-cache --activate --allow-root
 wp redis enable --allow-root
 
-wp theme install twentytwentyone --activate --allow-root
+# wp theme install inspiro --activate --allow-root
+chown -R www-data:www-data /var/www/wp-content
+chmod -R 755 /var/www/wp-content
+mkdir -p /var/www/wp-content/upgrade/
+wp theme install inspiro --activate --allow-root
+wp post create --post_title='About me ' --post_content='Hey! hope you are doing good....' --post_status=publish
 
 wp plugin update --all --allow-root
 
