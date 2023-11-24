@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   nginx:
     image: nginx
@@ -30,6 +29,8 @@ services:
         DB_ROOT: ${DB_ROOT}
     networks:
       - inception
+    ports:
+      - "3306:3306"
     volumes:
       - db-volume:/var/lib/mysql
     restart: on-failure
@@ -58,6 +59,29 @@ services:
       - inception
     volumes:
       - wp-volume:/var/www/
+  website:
+    image: website
+    build:
+      context: .
+      dockerfile: requirements/bonus/website/Dockerfile
+    container_name: website
+    ports:
+      - "80:80"
+    restart: on-failure
+  portainer:
+      image: portainer
+      container_name: portainer
+      build:
+        context: .
+        dockerfile: requirements/bonus/portainer/Dockerfile
+      networks:
+        - inception
+      ports:
+        - "9443:9443"
+      volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+        - portainer_data:/data
+      restart: always
 
 volumes:
   wp-volume:
@@ -73,6 +97,9 @@ volumes:
       o: bind
       type: none
       device: /home/${USER}/data/mariadb
+  portainer_data:
+    driver: local
+    name: portainer_data
 
 networks:
   inception:

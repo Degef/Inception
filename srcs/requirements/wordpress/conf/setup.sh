@@ -28,7 +28,6 @@ chown -R www-data:www-data /var/www/wp-content
 chmod -R 755 /var/www/wp-content
 mkdir -p /var/www/wp-content/upgrade/
 wp theme install inspiro --activate --allow-root
-wp post create --post_title='About me ' --post_content='Hey! hope you are doing good....' --post_status=publish
 
 wp plugin update --all --allow-root
 
