@@ -2,4 +2,4 @@
 FROM portainer/portainer-ce
 
 # Expose Portainer port
-EXPOSE 9000
+EXPOSE 9443
